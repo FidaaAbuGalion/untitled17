@@ -15,54 +15,45 @@ public class LogIn implements ActionListener {
     Window w;
     public boolean isLogged;
 
-    public LogIn (Window w) {
-
+    public LogIn(Window w) {
         this.w = w;
-
     }
 
     public void actionPerformed(ActionEvent m) {
-
-        if (m.getSource() == button){
+        if (m.getSource() == button) {
             System.setProperty("webdriver.openqa.driver", "C:\\Users\\IMOE001\\Downloads\\chromedriver_win32\\1.exe");
             ChromeDriver driver = new ChromeDriver();
             driver.get("https://web.whatsapp.com");
             driver.manage().window().maximize();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            WebElement webElement = driver.findElement(By.id("app"));
-            if (webElement!= null){
+            WebElement qrCodeElement = driver.findElement(By.xpath("//canvas[@aria-label='Scan me!']"));
+            if (qrCodeElement != null) {
                 Success(w.getGraphics());
                 isLogged = true;
+                JOptionPane.showMessageDialog(null, "Please scan the QR code to log in to your WhatsApp account.");
             }
 
-            webElement.click();
-
-//            webElement.sendKeys("");
+            driver.quit();
         }
-
     }
-    public void render(){
-        button = new JButton("log in whatsapp");
+
+    public void render() {
+        button = new JButton("Log in to WhatsApp");
         button.setBounds(w.SIZE - 470, w.SIZE - 430, w.SIZE - 360, w.SIZE - 460);
         button.setBackground(Color.green.darker());
         button.addActionListener(this);
         w.add(button);
     }
 
-    private void Success (Graphics g){
-
-        g.setFont(new Font("Times New Roman",Font.BOLD,18));
+    private void Success(Graphics g) {
+        g.setFont(new Font("Times New Roman", Font.BOLD, 18));
         FontMetrics fontMetrics = g.getFontMetrics(g.getFont());
-        g.drawString("logged in successfully !",w.SIZE - 455, w.SIZE - 320);
+        g.drawString("Logged in successfully!", w.SIZE - 455, w.SIZE - 320);
         g.setColor(Color.BLACK);
-
     }
-
-
-
 }
