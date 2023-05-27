@@ -16,6 +16,8 @@ public class SendingMessage implements ActionListener {
     private JTextField messageField;
     private String phoneNumber;
     private String message;
+    private JLabel phoneNumberLabel;
+    private JLabel messageLabel;
 
 
     public SendingMessage(Main main) {
@@ -35,8 +37,8 @@ public class SendingMessage implements ActionListener {
 
         main.add(sendButton);
 
-        JLabel phoneNumberLabel = new JLabel("Phone Number:");
-        JLabel messageLabel = new JLabel("Message:");
+        phoneNumberLabel = new JLabel("Phone Number:");
+        messageLabel = new JLabel("Message:");
 
         phoneNumberLabel.setBounds(50, 100, 100, 30);
         messageLabel.setBounds(50, 200, 100, 30);
@@ -81,6 +83,27 @@ public class SendingMessage implements ActionListener {
         WebElement sendMessage =  main.driver.findElement(By.xpath("//span[@data-icon='send']"));
         sendMessage.click();
 
+        //main.driver.quit();
+        messageHaveBeenSend(main.getGraphics());
+
+    }
+
+    public void messageHaveBeenSend(Graphics g){
+
+        main.remove(phoneNumberLabel);
+        main.remove(messageLabel);
+        main.remove(phoneNumberField);
+        main.remove(messageField);
+        main.remove(sendButton);
+
+
+        g.setColor(Color.darkGray);
+        g.fillRect(0, 0, 500, 500);
+
+        g.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        FontMetrics fontMetrics = g.getFontMetrics(g.getFont());
+        g.setColor(Color.lightGray);
+        g.drawString("Message Send Successfully !",150,200);
     }
 
 

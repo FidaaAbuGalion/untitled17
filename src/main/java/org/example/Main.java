@@ -13,9 +13,6 @@ public class Main extends JFrame implements ActionListener {
 
     private final int SIZE = 500 ;
     JButton button;
-    JButton sendButton;
-    private JTextField phoneNumberField;
-    private JTextField messageField;
     private boolean notLogged = true;
     private SendingMessage sm = new SendingMessage(this);
     ChromeDriver driver;
@@ -55,9 +52,6 @@ public class Main extends JFrame implements ActionListener {
             }
 
             WebElement webElement = driver.findElement(By.id("app"));
-            if (webElement != null){
-              //  Success(getGraphics());
-            }
             webElement.click();
 
                     WebElement qrElement = driver.findElement(By.xpath("//*[@id=\"app\"]"));
@@ -103,22 +97,6 @@ public class Main extends JFrame implements ActionListener {
         g.drawString("Please scan the QR code to log in to your WhatsApp account.",SIZE - 455, SIZE - 320);
         g.setColor(Color.BLACK);
     }
-    private void messageSending(Graphics g){
 
-        g.setColor(Color.BLUE);
-        g.fillRect(0,0,500,500);
-        g.setColor(Color.cyan);
-       g.drawString("fgfgdgsg", 300,300);
-
-        sendButton = new JButton("send message") ;
-        sendButton.setBounds(SIZE - 470 , SIZE - 430 , SIZE - 360 , SIZE -460);
-        sendButton.setBackground(Color.green);
-        sendButton.addActionListener(this);
-
-        this.add(sendButton);
-
-
-
-    }
 
 }
