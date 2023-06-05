@@ -2,6 +2,9 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +58,7 @@ public class SendingMessage implements ActionListener {
         g.drawString("Message: " + message, 50, 300);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         phoneNumber = phoneNumberField.getText();
@@ -88,6 +92,8 @@ public class SendingMessage implements ActionListener {
 
     }
 
+
+
     public void messageHaveBeenSend(Graphics g){
 
         main.remove(phoneNumberLabel);
@@ -104,6 +110,28 @@ public class SendingMessage implements ActionListener {
         FontMetrics fontMetrics = g.getFontMetrics(g.getFont());
         g.setColor(Color.lightGray);
         g.drawString("Message Send Successfully !",150,200);
+
+
+        // Check the status
+        WebElement status ;
+        WebElement doubleCheckMark = main.driver.findElement(By.xpath("//*[@id='main']//span[contains(@data-icon, 'checkmark-double')]"));
+        WebElement singleCheckMark = main.driver.findElement(By.xpath("//*[@id='main']//span[contains(@data-icon, 'checkmark')]"));
+        WebElement blueCheckMark = main.driver.findElement(By.xpath("//*[@id='main']//span[contains(@data-icon, 'checkmark') and @style='color: #075e54;']"));
+
+        g.setColor(Color.cyan);
+        if (doubleCheckMark.isDisplayed()) {
+            g.drawString("(double checkmark)!",150,250);
+        } else if (singleCheckMark.isDisplayed()) {
+            g.drawString("(single checkmark)!",150,250);
+        } else if (blueCheckMark.isDisplayed()) {
+            g.drawString("(blue checkmark)!",150,250);
+        } else {
+            g.drawString("(send message failed)!",150,250);        }
+
+        // Close the browser if the status changes to blue checkmark
+        if (blueCheckMark.isDisplayed()) {
+            main.driver.quit();
+        }
     }
 
 
